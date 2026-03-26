@@ -2,7 +2,7 @@ import cn from 'classnames';
 interface PaginationProps {
   total: number;
   perPage: number;
-  currentPage: number;
+  currentPage?: number;
   onPageChange: (page: number) => void;
 }
 
@@ -11,7 +11,7 @@ function isPrevDisables(current: number) {
 }
 
 function isNextDisables(current: number, pagesNumber: number) {
-  return current === pagesNumber;
+  return current >= pagesNumber;
 }
 
 export const Pagination = ({
@@ -20,10 +20,8 @@ export const Pagination = ({
   currentPage = 1,
   onPageChange,
 }: PaginationProps) => {
-  const pagesToShow = Array.from(
-    { length: Math.ceil(total / perPage) + 1 },
-    (_, i) => i,
-  ).filter(el => el !== 0);
+  const pagesNumber = Math.ceil(total / perPage);
+  const pagesToShow = Array.from({ length: pagesNumber }, (_, i) => i + 1);
 
   return (
     <ul className="pagination">
@@ -60,7 +58,7 @@ export const Pagination = ({
       <li
         className={cn(
           'page-item ',
-          isNextDisables(currentPage, pagesToShow.length) && 'disabled',
+          isNextDisables(currentPage, pagesNumber) && 'disabled',
         )}
       >
         <a
@@ -68,10 +66,10 @@ export const Pagination = ({
           className="page-link"
           href="#next"
           aria-disabled={
-            isNextDisables(currentPage, pagesToShow.length) && 'true'
+            isNextDisables(currentPage, pagesNumber) && 'true'
           }
           onClick={() =>
-            !isNextDisables(currentPage, pagesToShow.length) &&
+            !isNextDisables(currentPage, pagesNumber) &&
             onPageChange(currentPage + 1)
           }
         >

@@ -30,7 +30,8 @@ export const App: React.FC = () => {
     perPage * currentPage - perPage,
     perPage * currentPage,
   );
-  const startItemIndex = items.length === 0 ? 0 : (currentPage - 1) * perPage + 1;
+  const startItemIndex =
+    items.length === 0 ? 0 : (currentPage - 1) * perPage + 1;
   const endItemIndex = Math.min(currentPage * perPage, items.length);
 
   const handlePerPageSelector = (
