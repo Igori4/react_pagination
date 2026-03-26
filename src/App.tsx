@@ -9,10 +9,6 @@ import { Selector } from './components/Selector';
 const items = getNumbers(1, 42).map(n => `Item ${n}`);
 const steps = [3, 5, 10, 20];
 
-const extractNumber = (text: string) => {
-  return text.split(' ')[1];
-};
-
 const toPositiveInt = (value: string | null) => {
   const num = Number(value);
 
@@ -34,8 +30,8 @@ export const App: React.FC = () => {
     perPage * currentPage - perPage,
     perPage * currentPage,
   );
-  const startItemIndex = extractNumber(itemsToShow[0] ?? '');
-  const endItemIndex = extractNumber(itemsToShow[itemsToShow.length - 1] ?? '');
+  const startItemIndex = items.length === 0 ? 0 : (currentPage - 1) * perPage + 1;
+  const endItemIndex = Math.min(currentPage * perPage, items.length);
 
   const handlePerPageSelector = (
     event: React.ChangeEvent<HTMLSelectElement>,

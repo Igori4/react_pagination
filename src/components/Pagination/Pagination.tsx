@@ -17,7 +17,7 @@ function isNextDisables(current: number, pagesNumber: number) {
 export const Pagination = ({
   total,
   perPage = 5,
-  currentPage,
+  currentPage = 1,
   onPageChange,
 }: PaginationProps) => {
   const pagesToShow = Array.from(
@@ -51,7 +51,7 @@ export const Pagination = ({
             data-cy="pageLink"
             className="page-link"
             href={`#${page}`}
-            onClick={() => onPageChange(page)}
+            onClick={() => page !== currentPage && onPageChange(page)}
           >
             {page}
           </a>
